@@ -1,0 +1,33 @@
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    gap: 20px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.pagination-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.arrow {
+    cursor: pointer;
+}
+
+.boldarrowright {
+    transform: rotate(180deg);
+}
+
+.smallarrow {
+    font-size: 30px;
+}

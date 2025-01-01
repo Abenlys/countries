@@ -1,0 +1,17 @@
+.contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.contact__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.contact__item p {
+    margin-top: 10px;
+}

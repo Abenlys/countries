@@ -1,0 +1,30 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+}
+
+.card__info {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}
+
+.card__info__name {
+  font-weight: bold;
+}
+
+.card__info__region {
+  font-weight: lighter;
+}
+
+.card__info button {
+  background-color: blue;
+  color: white;
+  border: none;
+  font-size: large;
+  padding: 3px;
+}
