@@ -1,16 +1,16 @@
 import React from "react";
-import leftBoldArrow from "../public/arrow-left-bold-circle-outline.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setStartIndex,
   setVisibleItems,
 } from "../src/app/Redux/features/countriesSlice";
-
-library.add(faArrowLeft, faArrowRight);
+import {
+  StepBackwardOutlined,
+  StepForwardOutlined,
+  FastBackwardOutlined,
+  FastForwardOutlined,
+} from "@ant-design/icons";
 
 export default function Pagination() {
   const dispatch = useDispatch();
@@ -31,32 +31,28 @@ export default function Pagination() {
   const endItem = Math.min(startIndex + 50, countriesData.length);
   return (
     <div className="pagination-cards">
-      <Image
+      <FastBackwardOutlined
         onClick={() => updateVisibleItems(0)}
-        className="arrow"
-        src={leftBoldArrow}
-        height={50}
-        width={50}
+        className="arrow bigArrow"
         alt="leftBoldArrow"
       />
-      <FontAwesomeIcon
+
+      <StepBackwardOutlined
         className="smallarrow arrow"
-        icon={faArrowLeft}
         onClick={() => navigate("previous")}
       />
+
       <p>
         {startItem} ... {endItem}
       </p>
       <p>Total: {countriesData.length}</p>
-      <FontAwesomeIcon
+      <StepForwardOutlined
         className="smallarrow arrow"
-        icon={faArrowRight}
         onClick={() => navigate("next")}
       />
-      <Image
+      <FastForwardOutlined
         onClick={() => updateVisibleItems(countriesData.length - 50)}
-        className="boldarrowright arrow"
-        src={leftBoldArrow}
+        className="bigArrow arrow"
         height={50}
         width={50}
         alt="leftBoldArrow"

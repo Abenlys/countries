@@ -24,10 +24,17 @@
     cursor: pointer;
 }
 
-.boldarrowright {
-    transform: rotate(180deg);
-}
-
 .smallarrow {
     font-size: 30px;
+}
+.smallarrow:hover {
+    color: #1976d2;
+}   
+
+.bigArrow {
+    font-size: 50px;
+}
+
+.bigArrow:hover {
+    color: #1976d2;
 }

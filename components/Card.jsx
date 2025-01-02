@@ -28,7 +28,7 @@ export default function Card({ country }) {
         />
         <p className="card__info__name">{country.name}</p>
         <p className="card__info__region">{country.region}</p>
-        <button>Details</button>
+        <button>DETAILS</button>
 
       </div>
     </div>
