@@ -16,7 +16,8 @@ export const fetchCountries = createAsyncThunk(
   async () => {
     const response = await fetch(`${COUNTRY_URL}?apikey=${COUNTRY_API}`);
     const data = await response.json();
-    return Object.values(data).sort((a, b) => a.name.localeCompare(b.name));
+    const sortedData = Object.values(data).sort((a, b) => a.name.localeCompare(b.name));
+    return sortedData;
   }
 );
 

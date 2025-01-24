@@ -12,12 +12,18 @@ import Pagination from "./Pagination";
 
 export default function Main() {
   const dispatch = useDispatch();
-  const { countriesData, visibleItems, startIndex, status, error } =
-    useSelector((state) => state.countries);
+  const {
+    countriesData,
+    visibleItems,
+    startIndex,
+    status,
+    error,
+    searchTerms,
+  } = useSelector((state) => state.countries);
 
   // fonction pour mettre à jour les éléments visibles
-  const updateVisibleItems = (data, start) => {
-    const end = start + 50;
+  const updateVisibleItems = (data, start, filterData) => {
+    const end = start + (filterData ? filterData.length : 50);
     dispatch(setVisibleItems(data.slice(start, end)));
   };
 
@@ -30,6 +36,13 @@ export default function Main() {
   useEffect(() => {
     updateVisibleItems(countriesData, startIndex);
   }, [startIndex, countriesData]);
+
+  useEffect(() => {
+    const filteredData = searchTerms ? countriesData.filter((country) =>
+      country.name.toLowerCase().includes(searchTerms.toLowerCase())
+    ): countriesData;
+    updateVisibleItems(filteredData, startIndex);
+  }, [startIndex, searchTerms, countriesData]);
 
   return (
     <div className="main">

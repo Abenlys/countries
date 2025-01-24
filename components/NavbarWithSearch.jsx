@@ -1,13 +1,13 @@
 "use client";
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import "../styles/Navbar.css";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import Link from "next/link";
+import SearchIcon from "@mui/icons-material/Search";
+import "../styles/Navbar.css";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchTerms } from "../src/app/Redux/features/countriesSlice";
+import Navbar from "./Navbar";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,23 +50,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-export default function Navbar({ children }) {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            <Link href="/">COUNTRY APP</Link>
-          </Typography>
 
-          {children}
-        </Toolbar>
-      </AppBar>
-    </Box>
+export default function NavbarWithSearch() {
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    dispatch(setSearchTerms(value));
+  };
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
+  return (
+    <Navbar>
+      <Search onChange={handleSearch}>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ "aria-label": "search" }}
+        />
+      </Search>
+    </Navbar>
   );
 }

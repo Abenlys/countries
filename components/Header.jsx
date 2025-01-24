@@ -1,11 +1,11 @@
 import React from 'react'
 import "../styles/Header.css"
-import Navbar from './Navbar'
+import NavbarWithSearch from './NavbarWithSearch'
 
 export default function Header() {
   return (
     <div>
-      <Navbar />
+      <NavbarWithSearch />
     </div>
   )
 }

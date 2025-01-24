@@ -14,25 +14,29 @@ import {
 
 export default function Pagination() {
   const dispatch = useDispatch();
-  const { countriesData, startIndex } = useSelector((state) => state.countries);
-  const updateVisibleItems = (start) => {
+  const { countriesData, visibleItems, startIndex, searchTerms } = useSelector((state) => state.countries);
+  const updateVisibleItems = (data, start) => {
     const end = start + 50;
-    dispatch(setVisibleItems(countriesData.slice(start, end)));
+    dispatch(setVisibleItems(data.slice(start, end)));
     dispatch(setStartIndex(start));
   };
+  const filteredData = searchTerms ? countriesData.filter((country) =>
+    country.name.toLowerCase().includes(searchTerms.toLowerCase())): countriesData;
   const navigate = (direction) => {
+    const filteredData = searchTerms ? countriesData.filter((country) =>
+      country.name.toLowerCase().includes(searchTerms.toLowerCase())): countriesData;
     const newIndex =
       direction === "next"
-        ? Math.min(startIndex + 50, countriesData.length - 50)
+        ? Math.min(startIndex + 50, filteredData.length - 50)
         : Math.max(startIndex - 50, 0);
-    updateVisibleItems(newIndex);
+    updateVisibleItems(filteredData, newIndex);
   };
   const startItem = startIndex + 1;
-  const endItem = Math.min(startIndex + 50, countriesData.length);
+  const endItem = Math.min(startIndex + 50, visibleItems.length);
   return (
     <div className="pagination-cards">
       <FastBackwardOutlined
-        onClick={() => updateVisibleItems(0)}
+        onClick={() => updateVisibleItems(filteredData ? filteredData :countriesData, 0)}
         className="arrow bigArrow"
         alt="leftBoldArrow"
       />
@@ -45,13 +49,13 @@ export default function Pagination() {
       <p>
         {startItem} ... {endItem}
       </p>
-      <p>Total: {countriesData.length}</p>
+      <p>Total: {filteredData ? filteredData.length : countriesData.length}</p>
       <StepForwardOutlined
         className="smallarrow arrow"
         onClick={() => navigate("next")}
       />
       <FastForwardOutlined
-        onClick={() => updateVisibleItems(countriesData.length - 50)}
+        onClick={() => updateVisibleItems(filteredData ? filteredData : countriesData, filteredData ? filteredData.length - 50 : countriesData.length - 50)}
         className="bigArrow arrow"
         height={50}
         width={50}
