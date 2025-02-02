@@ -1,10 +1,11 @@
 import React from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 import {GOOGLE_MAPS_API_KEY} from "../../api/api"
+import "../styles/Map.css"
 
 const containerStyle = {
-  width: "600px",
-  height: "400px",
+  width: "100%",
+  height: "100%",
 };
 
 export default function Map({ lat, lng }) {
@@ -20,10 +21,12 @@ export default function Map({ lat, lng }) {
   return (
 <>
   {lat !== undefined && lng !== undefined ? (
-    <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+    <LoadScriptNext googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+      <div className="map-container">
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={5}>
       </GoogleMap>
-    </LoadScript>
+      </div>
+    </LoadScriptNext>
   ) : null}
 </>
   );

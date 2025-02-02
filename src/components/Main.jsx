@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import {
   setVisibleItems,
   fetchCountries,
+  setStartIndex,
 } from "../app/Redux/features/countriesSlice";
 import Pagination from "./Pagination";
 
@@ -22,8 +23,8 @@ export default function Main() {
   } = useSelector((state) => state.countries);
 
   // fonction pour mettre à jour les éléments visibles
-  const updateVisibleItems = (data, start, filterData) => {
-    const end = start + (filterData ? filterData.length : 50);
+  const updateVisibleItems = (data, start) => {
+    const end = Math.min(start + 50, data.length);
     dispatch(setVisibleItems(data.slice(start, end)));
   };
 
@@ -36,6 +37,10 @@ export default function Main() {
   useEffect(() => {
     updateVisibleItems(countriesData, startIndex);
   }, [startIndex, countriesData]);
+
+  useEffect(() => {
+    dispatch(setStartIndex(0))
+  }, [searchTerms])
 
   useEffect(() => {
     const filteredData = searchTerms

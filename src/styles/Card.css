@@ -4,6 +4,11 @@
   justify-content: center;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  border: solid 4px white;
+}
+
+.card:hover {
+  border: solid 4px green;
 }
 
 .card__info {

@@ -1,0 +1,11 @@
+.map-container {
+    display: flex;
+    width: 35rem;
+    height: 25rem;
+}
+
+@media screen and (max-width: 768px) {
+    .map-container {
+        width: 20rem;
+    }
+}

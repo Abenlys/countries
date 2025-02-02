@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setStartIndex,
@@ -18,7 +17,7 @@ export default function Pagination() {
     (state) => state.countries
   );
   const updateVisibleItems = (data, start) => {
-    const end = start + 50;
+    const end = Math.min(start + 50, data.length);
     dispatch(setVisibleItems(data.slice(start, end)));
     dispatch(setStartIndex(start));
   };
@@ -33,14 +32,22 @@ export default function Pagination() {
           country.name.toLowerCase().includes(searchTerms.toLowerCase())
         )
       : countriesData;
+      const totalItems = filteredData ? filteredData.length : countriesData.length
+      const maxStartIndex = totalItems - (totalItems % 50 || 50)
     const newIndex =
       direction === "next"
-        ? Math.min(startIndex + 50, filteredData.length - 50)
+        ? Math.min(startIndex + 50, maxStartIndex)
         : Math.max(startIndex - 50, 0);
     updateVisibleItems(filteredData, newIndex);
   };
   const startItem = startIndex + 1;
-  const endItem = Math.min(startIndex + 50, visibleItems.length);
+  const endItem = () => {
+    if (startIndex + 50 < filteredData.length) {
+      return startIndex + 50
+    }
+    return filteredData.length
+  };
+  console.log(startIndex)
   return (
     <div className="pagination-cards">
       <FastBackwardOutlined
@@ -57,7 +64,7 @@ export default function Pagination() {
       />
 
       <p>
-        {startItem} ... {endItem}
+        {startItem} ... {endItem()}
       </p>
       <p>Total: {filteredData ? filteredData.length : countriesData.length}</p>
       <StepForwardOutlined
@@ -79,3 +86,6 @@ export default function Pagination() {
     </div>
   );
 }
+
+// ? Math.min(startIndex + 50, filteredData.length - 50)
+// : Math.max(startIndex - 50, 0);
