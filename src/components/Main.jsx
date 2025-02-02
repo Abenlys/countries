@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import {
   setVisibleItems,
   fetchCountries,
-} from "../src/app/Redux/features/countriesSlice";
+} from "../app/Redux/features/countriesSlice";
 import Pagination from "./Pagination";
 
 export default function Main() {
@@ -38,9 +38,11 @@ export default function Main() {
   }, [startIndex, countriesData]);
 
   useEffect(() => {
-    const filteredData = searchTerms ? countriesData.filter((country) =>
-      country.name.toLowerCase().includes(searchTerms.toLowerCase())
-    ): countriesData;
+    const filteredData = searchTerms
+      ? countriesData.filter((country) =>
+          country.name.toLowerCase().includes(searchTerms.toLowerCase())
+        )
+      : countriesData;
     updateVisibleItems(filteredData, startIndex);
   }, [startIndex, searchTerms, countriesData]);
 

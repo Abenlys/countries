@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "../styles/Navbar.css";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setSearchTerms } from "../src/app/Redux/features/countriesSlice";
+import { setSearchTerms } from "../app/Redux/features/countriesSlice";
 import Navbar from "./Navbar";
 
 const Search = styled("div")(({ theme }) => ({
@@ -60,7 +60,7 @@ export default function NavbarWithSearch() {
     dispatch(setSearchTerms(value));
   };
   useEffect(() => {
-    console.log(search);
+    
   }, [search]);
   return (
     <Navbar>

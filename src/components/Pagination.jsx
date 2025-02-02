@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setStartIndex,
   setVisibleItems,
-} from "../src/app/Redux/features/countriesSlice";
+} from "../app/Redux/features/countriesSlice";
 import {
   StepBackwardOutlined,
   StepForwardOutlined,
@@ -14,17 +14,25 @@ import {
 
 export default function Pagination() {
   const dispatch = useDispatch();
-  const { countriesData, visibleItems, startIndex, searchTerms } = useSelector((state) => state.countries);
+  const { countriesData, visibleItems, startIndex, searchTerms } = useSelector(
+    (state) => state.countries
+  );
   const updateVisibleItems = (data, start) => {
     const end = start + 50;
     dispatch(setVisibleItems(data.slice(start, end)));
     dispatch(setStartIndex(start));
   };
-  const filteredData = searchTerms ? countriesData.filter((country) =>
-    country.name.toLowerCase().includes(searchTerms.toLowerCase())): countriesData;
+  const filteredData = searchTerms
+    ? countriesData.filter((country) =>
+        country.name.toLowerCase().includes(searchTerms.toLowerCase())
+      )
+    : countriesData;
   const navigate = (direction) => {
-    const filteredData = searchTerms ? countriesData.filter((country) =>
-      country.name.toLowerCase().includes(searchTerms.toLowerCase())): countriesData;
+    const filteredData = searchTerms
+      ? countriesData.filter((country) =>
+          country.name.toLowerCase().includes(searchTerms.toLowerCase())
+        )
+      : countriesData;
     const newIndex =
       direction === "next"
         ? Math.min(startIndex + 50, filteredData.length - 50)
@@ -36,7 +44,9 @@ export default function Pagination() {
   return (
     <div className="pagination-cards">
       <FastBackwardOutlined
-        onClick={() => updateVisibleItems(filteredData ? filteredData :countriesData, 0)}
+        onClick={() =>
+          updateVisibleItems(filteredData ? filteredData : countriesData, 0)
+        }
         className="arrow bigArrow"
         alt="leftBoldArrow"
       />
@@ -55,7 +65,12 @@ export default function Pagination() {
         onClick={() => navigate("next")}
       />
       <FastForwardOutlined
-        onClick={() => updateVisibleItems(filteredData ? filteredData : countriesData, filteredData ? filteredData.length - 50 : countriesData.length - 50)}
+        onClick={() =>
+          updateVisibleItems(
+            filteredData ? filteredData : countriesData,
+            filteredData ? filteredData.length - 50 : countriesData.length - 50
+          )
+        }
         className="bigArrow arrow"
         height={50}
         width={50}

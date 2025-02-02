@@ -1,6 +1,6 @@
-import position from "../public/position.png";
-import mail from "../public/mail.png";
-import tel from "../public/tel.png";
+import position from "../../public/position.png";
+import mail from "../../public/mail.png";
+import tel from "../../public/tel.png";
 
 export const contactList = [
   { icon: position, description: "Bordeaux, France", alt: "adresse" },
