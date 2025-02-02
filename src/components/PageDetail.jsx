@@ -8,6 +8,7 @@ import Map from "./Map";
 export default function PageDetail({ country }) {
   const { countriesData } = useSelector((state) => state.countries);
 
+
   const getOfficialName = (code) => {
     const ct = Object.values(countriesData).find(
       (ct) => ct.alpha3Code === code

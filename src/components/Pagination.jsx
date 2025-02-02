@@ -13,27 +13,40 @@ import {
 
 export default function Pagination() {
   const dispatch = useDispatch();
-  const { countriesData, visibleItems, startIndex, searchTerms } = useSelector(
-    (state) => state.countries
-  );
+  const { countriesData, visibleItems, startIndex, searchTerms, selectRegion } =
+    useSelector((state) => state.countries);
   const updateVisibleItems = (data, start) => {
     const end = Math.min(start + 50, data.length);
     dispatch(setVisibleItems(data.slice(start, end)));
     dispatch(setStartIndex(start));
   };
-  const filteredData = searchTerms
-    ? countriesData.filter((country) =>
-        country.name.toLowerCase().includes(searchTerms.toLowerCase())
-      )
-    : countriesData;
+  const filteredData = countriesData
+    .filter((country) =>
+      // Filtrer par recherche
+      searchTerms
+        ? country.name.toLowerCase().includes(searchTerms.toLowerCase())
+        : true
+    )
+    .filter((country) =>
+      // Filtrer par région
+      selectRegion ? country.region === selectRegion : true
+    );
   const navigate = (direction) => {
-    const filteredData = searchTerms
-      ? countriesData.filter((country) =>
-          country.name.toLowerCase().includes(searchTerms.toLowerCase())
-        )
-      : countriesData;
-      const totalItems = filteredData ? filteredData.length : countriesData.length
-      const maxStartIndex = totalItems - (totalItems % 50 || 50)
+    const filteredData = countriesData
+      .filter((country) =>
+        // Filtrer par recherche
+        searchTerms
+          ? country.name.toLowerCase().includes(searchTerms.toLowerCase())
+          : true
+      )
+      .filter((country) =>
+        // Filtrer par région
+        selectRegion ? country.region === selectRegion : true
+      );
+    const totalItems = filteredData
+      ? filteredData.length
+      : countriesData.length;
+    const maxStartIndex = totalItems - (totalItems % 50 || 50);
     const newIndex =
       direction === "next"
         ? Math.min(startIndex + 50, maxStartIndex)
@@ -43,11 +56,10 @@ export default function Pagination() {
   const startItem = startIndex + 1;
   const endItem = () => {
     if (startIndex + 50 < filteredData.length) {
-      return startIndex + 50
+      return startIndex + 50;
     }
-    return filteredData.length
+    return filteredData.length;
   };
-  console.log(startIndex)
   return (
     <div className="pagination-cards">
       <FastBackwardOutlined
@@ -72,12 +84,11 @@ export default function Pagination() {
         onClick={() => navigate("next")}
       />
       <FastForwardOutlined
-        onClick={() =>
-          updateVisibleItems(
-            filteredData ? filteredData : countriesData,
-            filteredData ? filteredData.length - 50 : countriesData.length - 50
-          )
-        }
+        onClick={() => {
+          const totalItems = filteredData.length;
+          const maxStartIndex = totalItems - (totalItems % 50 || 50);
+          updateVisibleItems(filteredData, maxStartIndex);
+        }}
         className="bigArrow arrow"
         height={50}
         width={50}
@@ -86,6 +97,3 @@ export default function Pagination() {
     </div>
   );
 }
-
-// ? Math.min(startIndex + 50, filteredData.length - 50)
-// : Math.max(startIndex - 50, 0);

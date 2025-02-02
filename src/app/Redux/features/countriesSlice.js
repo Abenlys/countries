@@ -7,6 +7,7 @@ const initialState = {
   visibleItems: [],
   startIndex: 0,
   searchTerms: "",
+  selectRegion: "",
   status: "idle",
   error: null,
 };
@@ -36,6 +37,9 @@ const countriesSlice = createSlice({
     setStartIndex(state, action) {
       state.startIndex = action.payload;
     },
+    setSelectRegion(state, action) {
+      state.selectRegion = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,6 +58,6 @@ const countriesSlice = createSlice({
   },
 });
 
-export const { setSearchTerms, setVisibleItems, setStartIndex } =
+export const { setSearchTerms, setVisibleItems, setStartIndex, setSelectRegion } =
   countriesSlice.actions;
 export default countriesSlice.reducer;

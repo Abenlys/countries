@@ -10,6 +10,7 @@ import {
   setStartIndex,
 } from "../app/Redux/features/countriesSlice";
 import Pagination from "./Pagination";
+import FilterRegion from "./FilterRegion";
 
 export default function Main() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function Main() {
     status,
     error,
     searchTerms,
+    selectRegion,
   } = useSelector((state) => state.countries);
 
   // fonction pour mettre à jour les éléments visibles
@@ -40,19 +42,24 @@ export default function Main() {
 
   useEffect(() => {
     dispatch(setStartIndex(0))
-  }, [searchTerms])
+  }, [searchTerms, selectRegion])
 
   useEffect(() => {
-    const filteredData = searchTerms
-      ? countriesData.filter((country) =>
-          country.name.toLowerCase().includes(searchTerms.toLowerCase())
-        )
-      : countriesData;
+    const filteredData = countriesData
+    .filter((country) => 
+      // Filtrer par recherche
+      searchTerms ? country.name.toLowerCase().includes(searchTerms.toLowerCase()) : true
+    )
+    .filter((country) => 
+      // Filtrer par région
+      selectRegion ? country.region === selectRegion : true
+    );
     updateVisibleItems(filteredData, startIndex);
-  }, [startIndex, searchTerms, countriesData]);
+  }, [startIndex, searchTerms, countriesData, selectRegion]);
 
   return (
     <div className="main">
+      <FilterRegion />
       <div className="cards">
         {visibleItems.map((ct) => (
           <Card key={ct.numericCode} country={ct} />

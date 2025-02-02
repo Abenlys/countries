@@ -1,0 +1,27 @@
+.filterregion {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10em;
+}
+
+.filterregion select {
+    border-radius: 2px;
+    border: solid 3px orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.filterregion label {
+    font-style: italic;
+    font-weight: bold;
+    padding-right: 5px;
+    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
